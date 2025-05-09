@@ -1,0 +1,46 @@
+syntax = 'proto3';
+
+package litetable.cdc.v1;
+
+option go_package = "go/proto;proto";
+
+message CDCSubscriptionRequest {
+  string client_id = 1;
+}
+
+// CDCService is a streaming gRPC service that receives a CDC event.
+service CDCService {
+  rpc CDCStream(CDCSubscriptionRequest) returns (stream CDCEvent);
+}
+
+// LitetableOperation is an enum that describes the type of operations that trigger CDC events.
+// Create operations are generally attached to database configuration and do not affect any indexed
+// data.
+enum LitetableOperation {
+  READ = 0;
+  WRITE = 1;
+  DELETE = 2;
+}
+
+// CDCEvent represents a view of the data that is changing in a Litetable column qualifier.
+// It represents the entire change, not the latest value.
+message CDCEvent {
+  // operation describes the type of change that occurred. Not all operations create a CDC event.
+  LitetableOperation operation = 1;
+  // row_key is the primary index in a Litetable row.
+  string row_key = 2;
+  // family is a configured family in the Litetable.
+  string family = 3;
+  // qualifier is a column qualifier, which contains an array of time series values.
+  string qualifier = 4;
+  // value is the value of the column qualifier. It is a byte array of whatever is saved.
+  bytes value = 5;
+  // timestamp_unix is the time in milliseconds since the epoch when the change occurred.
+  int64 timestamp_unix = 6;
+  // tombstone is true if the value is a tombstone. A tombstone is a marker that indicates that
+  // the value will be garbage collected in the future.
+  bool tombstone = 7;
+  // expires_at_unix is the time in milliseconds since the epoch when the value will approximately be
+  // garbage collected. This value will not be garbage collected before this time.
+  int64 expires_at_unix = 8;
+}
