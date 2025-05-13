@@ -5,7 +5,12 @@ package litetable.cdc.v1;
 option go_package = "go/proto;proto";
 
 message CDCSubscriptionRequest {
+  // client_id is a unique identifier for the subscribing service.
   string client_id = 1;
+  // replay tells the server to replay any missed events (optional)
+  bool replay = 2;
+  // resume_from_unix is the time the replay should ideally start from (optional)
+  int64 resume_from_unix = 3;
 }
 
 // CDCService is a streaming gRPC service that receives a CDC event.

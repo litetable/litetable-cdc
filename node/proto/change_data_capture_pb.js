@@ -98,7 +98,9 @@ proto.litetable.cdc.v1.CDCSubscriptionRequest.prototype.toObject = function(opt_
  */
 proto.litetable.cdc.v1.CDCSubscriptionRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    clientId: jspb.Message.getFieldWithDefault(msg, 1, "")
+    clientId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    replay: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
+    resumeFromUnix: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -139,6 +141,14 @@ proto.litetable.cdc.v1.CDCSubscriptionRequest.deserializeBinaryFromReader = func
       var value = /** @type {string} */ (reader.readString());
       msg.setClientId(value);
       break;
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setReplay(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setResumeFromUnix(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -175,6 +185,20 @@ proto.litetable.cdc.v1.CDCSubscriptionRequest.serializeBinaryToWriter = function
       f
     );
   }
+  f = message.getReplay();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
+  f = message.getResumeFromUnix();
+  if (f !== 0) {
+    writer.writeInt64(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -193,6 +217,42 @@ proto.litetable.cdc.v1.CDCSubscriptionRequest.prototype.getClientId = function()
  */
 proto.litetable.cdc.v1.CDCSubscriptionRequest.prototype.setClientId = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional bool replay = 2;
+ * @return {boolean}
+ */
+proto.litetable.cdc.v1.CDCSubscriptionRequest.prototype.getReplay = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 2, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.litetable.cdc.v1.CDCSubscriptionRequest} returns this
+ */
+proto.litetable.cdc.v1.CDCSubscriptionRequest.prototype.setReplay = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+/**
+ * optional int64 resume_from_unix = 3;
+ * @return {number}
+ */
+proto.litetable.cdc.v1.CDCSubscriptionRequest.prototype.getResumeFromUnix = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.litetable.cdc.v1.CDCSubscriptionRequest} returns this
+ */
+proto.litetable.cdc.v1.CDCSubscriptionRequest.prototype.setResumeFromUnix = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
