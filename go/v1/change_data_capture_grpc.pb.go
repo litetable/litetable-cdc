@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.23.4
-// source: proto/change_data_capture.proto
+// source: proto/v1/change_data_capture.proto
 
-package proto
+package v1
 
 import (
 	context "context"
@@ -132,5 +132,5 @@ var CDCService_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "proto/change_data_capture.proto",
+	Metadata: "proto/v1/change_data_capture.proto",
 }

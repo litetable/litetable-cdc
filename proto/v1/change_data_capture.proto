@@ -2,7 +2,7 @@ syntax = 'proto3';
 
 package litetable.cdc.v1;
 
-option go_package = "go/proto;proto";
+option go_package = "go/v1";
 
 message CDCSubscriptionRequest {
   // client_id is a unique identifier for the subscribing service.
